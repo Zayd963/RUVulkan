@@ -1,2 +1,6 @@
-﻿  Engine.cpp
+﻿  Source.cpp
+  Engine.cpp
+  Model.cpp
+  Pipeline.cpp
+  Generating Code...
   RUVulkan.vcxproj -> C:\Dev\RUVulkan\x64\Debug\RUVulkan.exe
