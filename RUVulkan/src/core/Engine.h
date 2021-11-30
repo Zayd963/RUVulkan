@@ -3,6 +3,7 @@
 #include "Pipeline/Pipeline.h"
 #include "Pipeline/EngineDevice.hpp"
 #include "Pipeline/SwapChain.hpp"
+#include "Model.h"
 #include <memory>
 class Engine
 {
@@ -18,6 +19,8 @@ private:
 	void CreateCommandBuffers();
 	void DrawFrame();
 
+	void LoadModels();
+
 	unsigned int WINDOW_WIDTH = 1280;
 	unsigned int WINDOW_HEIGHT = 720;
 	const char* WINDOW_TITLE = "RU Vulkan";
@@ -26,6 +29,7 @@ private:
 	EngineDevice device{ window };
 	SwapChain swapChain{ device, window.GetExtent() };
 	std::unique_ptr<Pipeline> pipeline;
+	std::unique_ptr<Model> model;
 	VkPipelineLayout pipelineLayout;
 	std::vector<VkCommandBuffer> commandBuffers;
 	

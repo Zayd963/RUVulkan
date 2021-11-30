@@ -6,7 +6,7 @@ bool Engine::Init()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return false;	
-
+	LoadModels();
 	CreatePipelineLayout();
 	CreatePipeline();
 	CreateCommandBuffers();
@@ -97,8 +97,11 @@ void Engine::CreateCommandBuffers()
 		renderPassInfo.pClearValues = clearValues.data();
 
 		vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
 		pipeline->Bind(commandBuffers[i]);
+		model->Bind(commandBuffers[i]);
+		model->Draw(commandBuffers[i]);
+
+		
 		vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
 
 		vkCmdEndRenderPass(commandBuffers[i]);
@@ -118,4 +121,16 @@ void Engine::DrawFrame()
 	result = swapChain.submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
 	if (result != VK_SUCCESS)
 		std::cout << "Could Not Submit Command Buffer" << std::endl;
+}
+
+void Engine::LoadModels()
+{
+	std::vector<Model::Vertex> verts
+	{
+		{{0.0f, -0.5f}},
+		{{0.5f, 0.5f}},
+		{{-0.5f, 0.5f}}
+	};
+
+	model = std::make_unique<Model>(device, verts);
 }

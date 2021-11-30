@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\RUVulkan\glm;C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\RUVulkan\glm;C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\Model.cpp" />
     <ClCompile Include="src\core\Pipeline\EngineDevice.cpp" />
     <ClCompile Include="src\core\Pipeline\Pipeline.cpp" />
     <ClCompile Include="src\core\Engine.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\core\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Model.h" />
     <ClInclude Include="src\core\Pipeline\EngineDevice.hpp" />
     <ClInclude Include="src\core\Pipeline\Pipeline.h" />
     <ClInclude Include="src\core\Engine.h" />
