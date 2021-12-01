@@ -13,12 +13,24 @@
 
 SwapChain::SwapChain(EngineDevice &deviceRef, VkExtent2D extent)
     : device{deviceRef}, windowExtent{extent} {
-  createSwapChain();
-  createImageViews();
-  createRenderPass();
-  createDepthResources();
-  createFramebuffers();
-  createSyncObjects();
+    Init();
+}
+
+SwapChain::SwapChain(EngineDevice& deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous)
+    : device{ deviceRef }, windowExtent{ windowExtent }, oldSwapChain{previous}
+{
+    Init();
+    oldSwapChain = nullptr;
+}
+
+void SwapChain::Init()
+{
+    createSwapChain();
+    createImageViews();
+    createRenderPass();
+    createDepthResources();
+    createFramebuffers();
+    createSyncObjects();
 }
 
 SwapChain::~SwapChain() {
@@ -162,7 +174,7 @@ void SwapChain::createSwapChain() {
   createInfo.presentMode = presentMode;
   createInfo.clipped = VK_TRUE;
 
-  createInfo.oldSwapchain = VK_NULL_HANDLE;
+  createInfo.oldSwapchain = oldSwapChain == nullptr ? VK_NULL_HANDLE : oldSwapChain->swapChain;
 
   if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
     throw std::runtime_error("failed to create swap chain!");

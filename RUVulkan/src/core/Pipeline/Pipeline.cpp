@@ -17,27 +17,19 @@ Pipeline::~Pipeline()
 	vkDestroyPipeline(device.device(), graphicsPipeline, nullptr);
 }
 
-void Pipeline::DefaultConfigInfo(PipelineConfigInfo& info, uint32_t width, uint32_t height)
+void Pipeline::DefaultConfigInfo(PipelineConfigInfo& info)
 {
 	info.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 	info.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 	info.inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;
-	info.viewport.x = 0.0f;
-	info.viewport.y = 0.0f;
-	info.viewport.width = static_cast<float>(width);
-	info.viewport.height = static_cast<float>(height);
-	info.viewport.minDepth = 0.0f;
-	info.viewport.maxDepth = 1.0f;
 
-	info.scissor.offset = { 0, 0 };
-	info.scissor.extent = { width, height };
-
+	
 
 	info.viewportInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 	info.viewportInfo.viewportCount = 1;
-	info.viewportInfo.pViewports = &info.viewport;
+	info.viewportInfo.pViewports = nullptr;
 	info.viewportInfo.scissorCount = 1;
-	info.viewportInfo.pScissors = &info.scissor;
+	info.viewportInfo.pScissors = nullptr;
 
 	info.rasterizationInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 	info.rasterizationInfo.depthClampEnable = VK_FALSE;
@@ -90,6 +82,13 @@ void Pipeline::DefaultConfigInfo(PipelineConfigInfo& info, uint32_t width, uint3
 	info.depthStencilInfo.stencilTestEnable = VK_FALSE;
 	info.depthStencilInfo.front = {};  // Optional
 	info.depthStencilInfo.back = {};   // Optional
+
+	info.dynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+	info.dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+	info.dynamicStateInfo.pDynamicStates = info.dynamicStateEnables.data();
+	info.dynamicStateInfo.dynamicStateCount =
+		static_cast<uint32_t>(info.dynamicStateEnables.size());
+	info.dynamicStateInfo.flags = 0;
 
 }
 
@@ -150,8 +149,6 @@ void Pipeline::CreateGraphicsPipeline(const char* _vertFilepath, const char* _fr
 	vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 	vertexInputInfo.pVertexBindingDescriptions = bindingDescriptions.data();
 
-	
-
 	VkGraphicsPipelineCreateInfo pipelineInfo{};
 	pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 	pipelineInfo.stageCount = 2;
@@ -163,7 +160,7 @@ void Pipeline::CreateGraphicsPipeline(const char* _vertFilepath, const char* _fr
 	pipelineInfo.pMultisampleState = &info.multisampleInfo;
 	pipelineInfo.pColorBlendState = &info.colorBlendInfo;
 	pipelineInfo.pDepthStencilState = &info.depthStencilInfo;
-	pipelineInfo.pDynamicState = nullptr;
+	pipelineInfo.pDynamicState = &info.dynamicStateInfo;
 	pipelineInfo.layout = info.pipelineLayout;
 	pipelineInfo.renderPass = info.renderPass;
 	pipelineInfo.subpass = info.subpass;

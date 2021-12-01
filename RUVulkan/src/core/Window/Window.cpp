@@ -20,7 +20,7 @@ void Window::CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface)
 
 bool Window::Init()
 {
-	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_VULKAN | SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_VULKAN | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	if (!window)
 		return false;
 	uint32_t extensionCount = 0;
@@ -29,3 +29,5 @@ bool Window::Init()
 	std::cout << extensionCount << " Extentions Supported" << std::endl;
 	return true;
 }
+
+

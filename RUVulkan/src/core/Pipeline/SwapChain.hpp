@@ -8,7 +8,7 @@
 // std lib headers
 #include <string>
 #include <vector>
-
+#include <memory>
 
 
 class SwapChain {
@@ -16,6 +16,7 @@ class SwapChain {
   static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
   SwapChain(EngineDevice &deviceRef, VkExtent2D windowExtent);
+  SwapChain(EngineDevice& deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
   ~SwapChain();
 
   SwapChain(const SwapChain &) = delete;
@@ -45,7 +46,7 @@ class SwapChain {
   void createRenderPass();
   void createFramebuffers();
   void createSyncObjects();
-
+  void Init();
   // Helper functions
   VkSurfaceFormatKHR chooseSwapSurfaceFormat(
       const std::vector<VkSurfaceFormatKHR> &availableFormats);
@@ -58,6 +59,8 @@ class SwapChain {
 
   std::vector<VkFramebuffer> swapChainFramebuffers;
   VkRenderPass renderPass;
+
+  std::shared_ptr<SwapChain> oldSwapChain;
 
   std::vector<VkImage> depthImages;
   std::vector<VkDeviceMemory> depthImageMemorys;

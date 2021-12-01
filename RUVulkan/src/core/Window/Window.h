@@ -8,14 +8,23 @@ public:
 	~Window();
 	SDL_Window* GetWindow() { return window; }
 	VkExtent2D GetExtent() { return { static_cast<uint32_t>(width), static_cast<uint32_t>(height) }; }
+	bool WasWindowRezied() { return frameBufferResized; }
+	void ResetWindowResizeFlag() { frameBufferResized = false; }
 	void CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
+	int width;
+	int height;
+	const char* name;
+
+	bool frameBufferResized;
 private:
 
 	bool Init();
 
-	const unsigned int width;
-	const unsigned int height;
-	const char* name;
+
+
+	
+
+
 
 	SDL_Window* window = nullptr;
 };
