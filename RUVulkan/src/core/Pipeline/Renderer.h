@@ -28,6 +28,8 @@ public:
 		return swapChain->getRenderPass();
 	}
 
+	float GetSwapChainAspectRatio() const { return swapChain->extentAspectRatio(); }
+
 	int GetCurrentFrameIndex() const
 	{
 		assert(isFrameStarted && "No Frame Index if Frame Has Not Started");

@@ -51,16 +51,17 @@ void SimpleRenderSystem::CreatePipeline(VkRenderPass renderPass)
 
 
 
-void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<GameObject>& gameObjects)
+void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<GameObject>& gameObjects, const Camera& camera)
 {
 	pipeline->Bind(commandBuffer);
+	auto projView = camera.GetProjection() * camera.GetView();
 	for (auto& obj : gameObjects)
 	{
 		obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.001f, glm::two_pi<float>());
-		obj.transform.rotation.x = glm::mod((obj.transform.rotation.y + 0.001f) * 0.5f , glm::two_pi<float>());
+		obj.transform.rotation.x = glm::mod((obj.transform.rotation.x + 0.001f) , glm::two_pi<float>());
 		SimplePushConstantData push{};
 		push.color = obj.color;
-		push.transfrom = obj.transform.Mat4();
+		push.transfrom = projView * obj.transform.Mat4();
 
 		vkCmdPushConstants(commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
 			0, sizeof(SimplePushConstantData), &push);

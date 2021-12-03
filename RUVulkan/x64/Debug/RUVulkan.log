@@ -1,6 +1,2 @@
-﻿  SimpleRenderSystem.cpp
-  GameObject.cpp
-  Engine.cpp
-  Source.cpp
-  Generating Code...
+﻿  Engine.cpp
   RUVulkan.vcxproj -> C:\Dev\RUVulkan\x64\Debug\RUVulkan.exe

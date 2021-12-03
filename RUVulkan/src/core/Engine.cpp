@@ -6,7 +6,7 @@
 #define FORCE_DEPTH_ZERO_TO_ONE
 #include <glm.hpp>
 #include <gtc/constants.hpp>
-
+#include "Pipeline/Camera.h"
 bool Engine::Init()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -20,6 +20,9 @@ bool Engine::Init()
 void Engine::Run()
 {
 	SimpleRenderSystem renderSystem{ device, renderer.GetSwapChainRenderPass() };
+	Camera camera{};
+	//camera.SetViewDirection(glm::vec3{ 0 }, glm::vec3{ .5f, 0.f, 1.f });
+	camera.SetViewTarget(glm::vec3{ -1.f, -2.f, 2.f }, glm::vec3{ 0.f, 0.f, 2.5f });
 	while (run)
 	{
 		while (SDL_PollEvent(&e))
@@ -32,11 +35,16 @@ void Engine::Run()
 				std::cout << "Window Resized" << std::endl;
 			}
 		}
+		
+
+		float aspect = renderer.GetSwapChainAspectRatio();
+		camera.SetPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
+		//camera.SetOrthoProjection(-aspect, aspect, -1, 1, -1, 1);
 
 		if (auto commandBuffer = renderer.BeginFrame())
 		{
 			renderer.BeginSwapChainRenderPass(commandBuffer);
-			renderSystem.RenderGameObjects(commandBuffer, gameObjects);
+			renderSystem.RenderGameObjects(commandBuffer, gameObjects, camera);
 			renderer.EndSwapChainRenderPass(commandBuffer);
 			renderer.EndFrame();
 		}
@@ -116,7 +124,7 @@ void Engine::LoadGameObjects()
 	
 	auto cube = GameObject::CreateGameObject();
 	cube.model = model;
-	cube.transform.translation = { 0.f, 0.f, 0.5f };
+	cube.transform.translation = { 0.f, 0.f, 2.5f };
 	cube.transform.scale = { 0.5f, 0.5f , 0.5f };
 	gameObjects.push_back(std::move(cube));
 }
