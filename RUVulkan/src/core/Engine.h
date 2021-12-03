@@ -1,8 +1,8 @@
 #pragma once
 #include "Window/Window.h"
-#include "Pipeline/Pipeline.h"
 #include "Pipeline/EngineDevice.hpp"
-#include "Pipeline/SwapChain.hpp"
+#include "Pipeline/Renderer.h"
+#include "GameObject.h"
 #include "Model.h"
 #include <memory>
 class Engine
@@ -14,16 +14,12 @@ public:
 	void Shutdown();
 
 private:
-	void CreatePipelineLayout();
-	void CreatePipeline();
-	void CreateCommandBuffers();
-	void FreeCommandBuffers();
-	void DrawFrame();
+	
+	
 
-	void LoadModels();
+	void LoadGameObjects();
 
-	void RecreateSwapChain();
-	void RecordCommandBuffer(int imageIndex);
+	
 
 	void OnResize();
 
@@ -35,11 +31,11 @@ private:
 	Window window{ WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE };
 	bool run = true;
 	EngineDevice device{ window };
-	std::unique_ptr<SwapChain> swapChain;
-	std::unique_ptr<Pipeline> pipeline;
-	std::unique_ptr<Model> model;
-	VkPipelineLayout pipelineLayout;
-	std::vector<VkCommandBuffer> commandBuffers;
+	Renderer renderer{ window, device, e };
+
+	std::vector<GameObject> gameObjects;
+
+
 	
 };
 

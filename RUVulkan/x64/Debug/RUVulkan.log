@@ -1,5 +1,6 @@
-﻿  Source.cpp
+﻿  SimpleRenderSystem.cpp
+  GameObject.cpp
   Engine.cpp
-  SwapChain.cpp
+  Source.cpp
   Generating Code...
   RUVulkan.vcxproj -> C:\Dev\RUVulkan\x64\Debug\RUVulkan.exe

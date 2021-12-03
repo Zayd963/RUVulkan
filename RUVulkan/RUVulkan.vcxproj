@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\Systems\SimpleRenderSystem.cpp" />
+    <ClCompile Include="src\core\Pipeline\Renderer.cpp" />
+    <ClCompile Include="src\core\GameObject.cpp" />
     <ClCompile Include="src\core\Model.cpp" />
     <ClCompile Include="src\core\Pipeline\EngineDevice.cpp" />
     <ClCompile Include="src\core\Pipeline\Pipeline.cpp" />
@@ -156,6 +159,9 @@
     <ClCompile Include="src\core\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Systems\SimpleRenderSystem.h" />
+    <ClInclude Include="src\core\Pipeline\Renderer.h" />
+    <ClInclude Include="src\core\GameObject.h" />
     <ClInclude Include="src\core\Model.h" />
     <ClInclude Include="src\core\Pipeline\EngineDevice.hpp" />
     <ClInclude Include="src\core\Pipeline\Pipeline.h" />
