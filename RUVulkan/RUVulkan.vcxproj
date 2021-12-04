@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\RUVulkan\glm;C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\RUVulkan;C:\Dev\RUVulkan\glm;C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Dev\RUVulkan\glm;C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Dev\RUVulkan;C:\Dev\RUVulkan\glm;C:\Dev\RUVulkan\VulkanSDK\1.2.198.0\Include\vulkan;C:\Dev\RUVulkan\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\Input.cpp" />
     <ClCompile Include="src\core\Pipeline\Camera.cpp" />
     <ClCompile Include="src\core\Systems\SimpleRenderSystem.cpp" />
     <ClCompile Include="src\core\Pipeline\Renderer.cpp" />
@@ -158,8 +159,10 @@
     <ClCompile Include="src\core\Pipeline\SwapChain.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\core\Window\Window.cpp" />
+    <ClCompile Include="src\core\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Input.h" />
     <ClInclude Include="src\core\Pipeline\Camera.h" />
     <ClInclude Include="src\core\Systems\SimpleRenderSystem.h" />
     <ClInclude Include="src\core\Pipeline\Renderer.h" />
@@ -170,6 +173,7 @@
     <ClInclude Include="src\core\Engine.h" />
     <ClInclude Include="src\core\Pipeline\SwapChain.hpp" />
     <ClInclude Include="src\core\Window\Window.h" />
+    <ClInclude Include="src\core\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\Basic_shader.frag" />

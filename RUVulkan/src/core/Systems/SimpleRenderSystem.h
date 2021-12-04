@@ -2,7 +2,6 @@
 #include "../Pipeline/Pipeline.h"
 #include "../Pipeline/EngineDevice.hpp"
 #include "../GameObject.h"
-#include "../Model.h"
 #include "../Pipeline/Camera.h"
 #include <memory>
 class SimpleRenderSystem
