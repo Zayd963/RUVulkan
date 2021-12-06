@@ -6,6 +6,7 @@
 #include "Model.h"
 #include <memory>
 #include <chrono>
+#include "Pipeline/Descriptors.h"
 class Engine
 {
 public:
@@ -34,7 +35,9 @@ private:
 	EngineDevice device{ window };
 	Renderer renderer{ window, device, e };
 
-	std::vector<GameObject> gameObjects;
+
+	std::unique_ptr<DescriptorPool> globalPool{};
+	GameObject::Map gameObjects;
 
 
 	

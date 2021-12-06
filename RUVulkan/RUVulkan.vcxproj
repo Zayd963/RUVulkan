@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\Pipeline\Descriptors.cpp" />
+    <ClCompile Include="src\core\Pipeline\Buffer.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
     <ClCompile Include="src\core\Pipeline\Camera.cpp" />
     <ClCompile Include="src\core\Systems\SimpleRenderSystem.cpp" />
@@ -162,8 +164,11 @@
     <ClCompile Include="src\core\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Pipeline\Descriptors.h" />
+    <ClInclude Include="src\core\Pipeline\Buffer.h" />
     <ClInclude Include="src\core\Input.h" />
     <ClInclude Include="src\core\Pipeline\Camera.h" />
+    <ClInclude Include="src\core\Pipeline\FrameInfo.h" />
     <ClInclude Include="src\core\Systems\SimpleRenderSystem.h" />
     <ClInclude Include="src\core\Pipeline\Renderer.h" />
     <ClInclude Include="src\core\GameObject.h" />

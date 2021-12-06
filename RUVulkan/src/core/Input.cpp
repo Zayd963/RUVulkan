@@ -7,6 +7,7 @@ Uint32 Input::currentMouseButtons = 0;
 Uint32 Input::lastMouseButton = 0;
 int Input::mouseX = 0;
 int Input::mouseY = 0;
+bool Input::run = true;
 void Input::Listen()
 {
 
@@ -15,7 +16,7 @@ void Input::Listen()
 	{
 		if (event.type == SDL_QUIT)
 		{
-
+			run = false;
 		}
 
 

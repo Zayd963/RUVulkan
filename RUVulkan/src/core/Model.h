@@ -4,7 +4,7 @@
 #define FORCE_DEPTH_ZERO_TO_ONE
 #include <glm.hpp>
 #include <memory>
-
+#include "Pipeline/Buffer.h"
 class Model
 {
 public:
@@ -49,12 +49,10 @@ private:
 	void CreateIndexBuffers(const std::vector<uint32_t>& indicies);
 
 	EngineDevice& device;
-	VkBuffer vertexBuffer;
-	VkDeviceMemory vertexBufferMemory;
+	std::unique_ptr<Buffer> vertexBuffer;
 	uint32_t vertexCount;
 
-	VkBuffer indexBuffer;
-	VkDeviceMemory indexBufferMemory;
+	std::unique_ptr<Buffer> indexBuffer;
 	uint32_t indexCount;
 	bool hasIndexBuffer{ false };
 };
