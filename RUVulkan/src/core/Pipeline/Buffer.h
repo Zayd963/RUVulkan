@@ -1,6 +1,15 @@
 #pragma once
 #include "vulkan.h"
 #include "EngineDevice.hpp"
+#include <glm/glm.hpp>
+struct GlobalUBO
+{
+    glm::mat4 projectionView{ 1.0f };
+    glm::vec4 ambinentLightColor{ 1.f, 1.f, 1.f, 0.2f };
+    glm::vec3 lightDirection{ 0, -1, 0 };
+    alignas(16) glm::vec4 lightColor{ 1.f, 0.0f, 1.0f, 1.0f };
+};
+
 class Buffer {
 public:
     Buffer(

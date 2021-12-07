@@ -8,7 +8,7 @@
 class Renderer
 {
 public:
-	Renderer(Window& wind, EngineDevice& dev, SDL_Event& e);
+	Renderer(Window& wind, EngineDevice& dev);
 	~Renderer();
 	VkCommandBuffer BeginFrame();
 	void EndFrame();
@@ -47,8 +47,6 @@ private:
 	bool isFrameStarted{ false };
 
 	void RecreateSwapChain();
-
-	SDL_Event& e;
 	
 	Window& window;
 	EngineDevice& device;

@@ -8,15 +8,20 @@ Uint32 Input::lastMouseButton = 0;
 int Input::mouseX = 0;
 int Input::mouseY = 0;
 bool Input::run = true;
-void Input::Listen()
+SDL_Event Input::e{};
+void Input::Listen(Renderer& renderer)
 {
 
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
+	
+	while (SDL_PollEvent(&e))
 	{
-		if (event.type == SDL_QUIT)
+		if (e.type == SDL_QUIT)
 		{
 			run = false;
+		}
+		else if (e.window.event == SDL_WINDOWEVENT_RESIZED)
+		{
+			renderer.OnResize();
 		}
 
 

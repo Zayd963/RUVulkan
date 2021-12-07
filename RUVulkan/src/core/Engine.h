@@ -6,7 +6,7 @@
 #include "Model.h"
 #include <memory>
 #include <chrono>
-#include "Pipeline/Descriptors.h"
+#include "../Scene/Scene.h"
 class Engine
 {
 public:
@@ -25,7 +25,7 @@ private:
 
 	void OnResize();
 
-	SDL_Event e;
+	SDL_Event e{};
 
 	unsigned int WINDOW_WIDTH = 640;
 	unsigned int WINDOW_HEIGHT = 480;
@@ -33,10 +33,7 @@ private:
 	Window window{ WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE };
 	bool run = true;
 	EngineDevice device{ window };
-	Renderer renderer{ window, device, e };
-
-
-	std::unique_ptr<DescriptorPool> globalPool{};
+	Renderer renderer{ window, device};
 	GameObject::Map gameObjects;
 
 

@@ -2,8 +2,9 @@
 #include <iostream>
 #include <array>
 #include <stdexcept>
-Renderer::Renderer(Window& wind, EngineDevice& dev, SDL_Event& e)
-	:window(wind), device(dev), e(e)
+#include "../Input.h"
+Renderer::Renderer(Window& wind, EngineDevice& dev)
+	:window(wind), device(dev)
 {
 	RecreateSwapChain();
 	CreateCommandBuffers();
@@ -137,7 +138,7 @@ void Renderer::RecreateSwapChain()
 	while (extent.width == 0 || extent.height == 0)
 	{
 		extent = window.GetExtent();
-		SDL_WaitEvent(&e);
+		SDL_WaitEvent(&Input::e);
 	}
 
 	vkDeviceWaitIdle(device.device());

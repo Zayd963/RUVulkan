@@ -1,10 +1,11 @@
 #pragma once
 #include <SDL.h>
+#include "Pipeline/Renderer.h"
 class Input
 {
 public:
 
-	static void Listen();
+	static void Listen(Renderer& renderer);
 	static bool isKeyDown(SDL_Scancode scancode);
 	static bool isKeyHeld(SDL_Scancode scancode);
 	static bool isKeyUp(SDL_Scancode scancode);
@@ -18,7 +19,7 @@ public:
 	static bool isMouse(Uint32 button);
 
 	static bool isRunning() { return run; }
-
+	static SDL_Event e;
 private:
 	static Uint8 lastFrameKeys[SDL_NUM_SCANCODES];
 	static Uint8 currentFrameKeys[SDL_NUM_SCANCODES];

@@ -10,13 +10,7 @@
 #include "Input.h"
 #include "Pipeline/Buffer.h"
 
-struct GlobalUBO
-{
-	glm::mat4 projectionView{1.0f};
-	glm::vec4 ambinentLightColor{ 1.f, 1.f, 1.f, 0.2f };
-	glm::vec3 lightDirection{ -1.f };
-	alignas(16) glm::vec4 lightColor{ 1.f, 0.0f, 1.0f, 1.0f };
-};
+
 
 void MoveInPlaneZ(float deltaTime, GameObject& gameObject)
 {
@@ -63,8 +57,6 @@ bool Engine::Init()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return false;	
-	globalPool = DescriptorPool::Builder(device).setMaxSets(SwapChain::MAX_FRAMES_IN_FLIGHT).addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-		SwapChain::MAX_FRAMES_IN_FLIGHT).build();
 
 	LoadGameObjects();
 	return true;
@@ -72,41 +64,16 @@ bool Engine::Init()
 
 void Engine::Run()
 {
-	std::vector<std::unique_ptr<Buffer>> uboBuffers({ SwapChain::MAX_FRAMES_IN_FLIGHT });
-
-	for (int i = 0; i < uboBuffers.size(); i++)
-	{
-		uboBuffers[i] = std::make_unique<Buffer>(device, sizeof(GlobalUBO), 1, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, device.properties.limits.minUniformBufferOffsetAlignment);
-
-		uboBuffers[i]->map();
-	}
-
-	auto globalSetLayout = DescriptorSetLayout::Builder(device).addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL).build();
-
-	std::vector<VkDescriptorSet> globalDescriptorSet({ SwapChain::MAX_FRAMES_IN_FLIGHT });
-	for (int i = 0; i < globalDescriptorSet.size(); i++)
-	{
-		auto bufferInfo = uboBuffers[i]->descriptorInfo();
-		DescriptorWriter(*globalSetLayout, *globalPool).writeBuffer(0, &bufferInfo).build(globalDescriptorSet[i]);
-
-
-	}
-
-	SimpleRenderSystem renderSystem{ device, renderer.GetSwapChainRenderPass(), globalSetLayout->getDescriptorSetLayout() };
-	Camera camera{};
-	//camera.SetViewDirection(glm::vec3{ 0 }, glm::vec3{ .5f, 0.f, 1.f });
-	camera.SetViewTarget(glm::vec3{ -1.f, -2.f, 2.f }, glm::vec3{ 0.f, 0.f, 2.5f });
-
 	auto viewGameObject = GameObject::CreateGameObject();
 	viewGameObject.transform.translation.z = -2.5f;
 	auto currentTime = std::chrono::high_resolution_clock::now();
 
+	Scene* scene = new Scene( device, window, renderer );
 
 	while (Input::isRunning())
 	{
-		Input::Listen();
-		
+		Input::Listen(renderer);
+
 		auto newTime = std::chrono::high_resolution_clock::now();
 
 		float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
@@ -114,37 +81,16 @@ void Engine::Run()
 
 		MoveInPlaneZ(frameTime, viewGameObject);
 
-		camera.SetViewYXZ(viewGameObject.transform.translation, viewGameObject.transform.rotation);
-
-		float aspect = renderer.GetSwapChainAspectRatio();
-		camera.SetPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f);
-		//camera.SetOrthoProjection(-aspect, aspect, -1, 1, -1, 1);
-
-		if (auto commandBuffer = renderer.BeginFrame())
-		{
-			int frameIndex = renderer.GetCurrentFrameIndex();
-
-			FrameInfo info{ frameIndex, frameTime, commandBuffer, camera, globalDescriptorSet[frameIndex], gameObjects };
-
-			GlobalUBO ubo{};
-			ubo.projectionView = camera.GetProjection() * camera.GetView();
-			uboBuffers[frameIndex]->writeToBuffer(&ubo);
-			uboBuffers[frameIndex]->flushIndex(frameIndex);
-
-			renderer.BeginSwapChainRenderPass(commandBuffer);
-			renderSystem.RenderGameObjects(info);
-			renderer.EndSwapChainRenderPass(commandBuffer);
-			renderer.EndFrame();
-		}
+		scene->GetCamera().SetViewYXZ(viewGameObject.transform.translation, viewGameObject.transform.rotation);
+		scene->Update(frameTime);
+		scene->Render();
 	}
-
 	vkDeviceWaitIdle(device.device());
+	delete scene;
 }
 
 void Engine::Shutdown()
 {
-	
-
 	SDL_Quit();
 }
 
