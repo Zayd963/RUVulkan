@@ -1,4 +1,4 @@
-﻿  Scene.cpp
-  Renderer.cpp
-  Generating Code...
+﻿  CameraController.cpp
+C:\Dev\RUVulkan\RUVulkan\src\core\Pipeline\Renderer.h(32,59): warning C4244: 'return': conversion from 'uint32_t' to 'float', possible loss of data
+C:\Dev\RUVulkan\RUVulkan\src\core\Pipeline\Renderer.h(33,61): warning C4244: 'return': conversion from 'uint32_t' to 'float', possible loss of data
   RUVulkan.vcxproj -> C:\Dev\RUVulkan\x64\Debug\RUVulkan.exe

@@ -9,17 +9,17 @@ class MasterRenderer
 {
 public:
 	MasterRenderer(EngineDevice& dev, Renderer& renderer);
-	void Draw(Camera& sceneCamera, GameObject::Map& gameObjects);
+	void Draw(Camera& sceneCamera, GameObject::Map& gameObjects, GlobalUBO& ubo);
 
 protected:
 	
 private:
-	std::unique_ptr<DescriptorPool> globalPool;// move to renderer
-	std::vector<std::unique_ptr<Buffer>> uboBuffers;//move to renderer
-	GlobalUBO ubo; // move to renderer
-	std::unique_ptr<DescriptorSetLayout> globalSetLayout; // move to renderer
-	std::vector<VkDescriptorSet> globalDescriptorSet; // move to renderer
-	Renderer& renderer; // move to renderer
+	std::unique_ptr<DescriptorPool> globalPool;
+	std::vector<std::unique_ptr<Buffer>> uboBuffers;
+
+	std::unique_ptr<DescriptorSetLayout> globalSetLayout; 
+	std::vector<VkDescriptorSet> globalDescriptorSet; 
+	Renderer& renderer; 
 	EngineDevice& device;
 	std::unique_ptr<SimpleRenderSystem> renderSystem;
 };

@@ -29,7 +29,8 @@ public:
 	}
 
 	float GetSwapChainAspectRatio() const { return swapChain->extentAspectRatio(); }
-
+	float GetSwapChainWidth() const { return swapChain->width(); }
+	float GetSwapChainHeight() const { return swapChain->height(); }
 	int GetCurrentFrameIndex() const
 	{
 		assert(isFrameStarted && "No Frame Index if Frame Has Not Started");

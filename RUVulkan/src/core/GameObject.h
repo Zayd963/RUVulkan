@@ -22,7 +22,7 @@ public:
 	id_t GetID() { return ID; }
 	
 	std::shared_ptr<Model> model;
-	glm::vec4 color{};
+	glm::vec4 color{1.f};
 
 	struct TransformComponent
 	{

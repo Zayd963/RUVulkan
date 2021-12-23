@@ -62,8 +62,7 @@ bool Engine::Init()
 
 void Engine::Run()
 {
-	auto viewGameObject = GameObject::CreateGameObject();
-	viewGameObject.transform.translation.z = -2.5f;
+	
 	auto currentTime = std::chrono::high_resolution_clock::now();
 
 	Scene* scene = new Scene( device, window, renderer );
@@ -71,15 +70,14 @@ void Engine::Run()
 	while (Input::isRunning())
 	{
 		Input::Listen(renderer);
-
+		
 		auto newTime = std::chrono::high_resolution_clock::now();
 
 		float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
 		currentTime = newTime;
 
-		MoveInPlaneZ(frameTime, viewGameObject);
-
-		scene->GetCamera().SetViewYXZ(viewGameObject.transform.translation, viewGameObject.transform.rotation);
+	
+	
 		scene->Update(frameTime);
 		scene->Render();
 	}
@@ -92,36 +90,5 @@ void Engine::Shutdown()
 	SDL_Quit();
 }
 
-void Engine::LoadGameObjects()
-{
-	std::shared_ptr<Model> flatVase = Model::CreateModelFromFile(device, "res/Models/flat_vase.obj");
-	
-	auto gameObject1 = GameObject::CreateGameObject();
-	gameObject1.model = flatVase;
-	gameObject1.transform.translation = { 0.f, 0.f, 0.f };
-	gameObject1.transform.scale = glm::vec3{ 3.f, 1.5f, 3.f };
-	gameObjects.emplace(gameObject1.GetID(), std::move(gameObject1));
 
-	std::shared_ptr<Model> smoothVase = Model::CreateModelFromFile(device, "res/Models/smooth_vase.obj");
-
-	auto gameObject = GameObject::CreateGameObject();
-	gameObject.model = smoothVase;
-	gameObject.transform.translation = { -1.f, 0.f, 0.f };
-	gameObject.transform.scale = glm::vec3{ 3.f, 1.5f, 3.f };
-	gameObjects.emplace(gameObject.GetID(), std::move(gameObject));
-
-	std::shared_ptr<Model> Quad = Model::CreateModelFromFile(device, "res/Models/Quad.obj");
-
-	auto floor = GameObject::CreateGameObject();
-	floor.model = Quad;
-	floor.transform.translation = { 0.f, 0.f, 0.f };
-	floor.transform.scale = glm::vec3{ 3.f, 1.f, 3.f };
-	gameObjects.emplace(floor.GetID(), std::move(floor));
-}
-
-
-void Engine::OnResize()
-{
-	renderer.OnResize();
-}
 

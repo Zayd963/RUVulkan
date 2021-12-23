@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../core/Pipeline/MasterRenderer.h"
+#include "../core/Systems/CameraController.h"
 class Scene
 {
 public:
@@ -12,11 +13,17 @@ public:
 private:
 	void LoadGameObjects(EngineDevice& device);
 	
+	glm::vec3 lastMouseVelocity{};
+	glm::vec3 currentMouseVelocity{};
+
 	EngineDevice& device;
 	Camera sceneCamera{};
-	
+	GlobalUBO ubo{};
 	Renderer& renderer;
 	GameObject::Map gameObjects; 
 	std::unique_ptr<MasterRenderer> masterRenderer;
+	GameObject viewGameObject = GameObject::CreateGameObject();
+	CameraController camera{ viewGameObject };
+
 };
 

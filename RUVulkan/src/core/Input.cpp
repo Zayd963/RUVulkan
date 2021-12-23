@@ -30,6 +30,11 @@ void Input::Listen(Renderer& renderer)
 	memcpy(currentFrameKeys, SDL_GetKeyboardState(NULL), sizeof(Uint8) * SDL_NUM_SCANCODES);
 	lastMouseButton = currentMouseButtons;
 	currentMouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
+
+	if (Input::isKeyDown(SDL_SCANCODE_ESCAPE))
+	{
+		run = false;
+	}
 }
 
 bool Input::isKeyDown(SDL_Scancode scancode)

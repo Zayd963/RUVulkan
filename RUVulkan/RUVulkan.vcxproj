@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Pipeline\MasterRenderer.cpp" />
+    <ClCompile Include="src\core\Systems\CameraController.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\core\Pipeline\Descriptors.cpp" />
     <ClCompile Include="src\core\Pipeline\Buffer.cpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Pipeline\MasterRenderer.h" />
+    <ClInclude Include="src\core\Systems\CameraController.h" />
     <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\core\Pipeline\Descriptors.h" />
     <ClInclude Include="src\core\Pipeline\Buffer.h" />

@@ -27,7 +27,7 @@ MasterRenderer::MasterRenderer(EngineDevice& dev, Renderer& renderer)
 	renderSystem = std::make_unique<SimpleRenderSystem>(device, renderer.GetSwapChainRenderPass(), globalSetLayout->getDescriptorSetLayout());
 }
 
-void MasterRenderer::Draw(Camera& sceneCamera, GameObject::Map& gameObjects)
+void MasterRenderer::Draw(Camera& sceneCamera, GameObject::Map& gameObjects, GlobalUBO& ubo)
 {
 	if (auto commandBuffer = renderer.BeginFrame())
 	{
