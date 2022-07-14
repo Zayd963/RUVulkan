@@ -1,5 +1,6 @@
 #include "Buffer.h"
 #include <cassert>
+#include <iostream>
 VkDeviceSize Buffer::getAlignment(VkDeviceSize instanceSize, VkDeviceSize minOffsetAlignment) {
     if (minOffsetAlignment > 0) {
         return (instanceSize + minOffsetAlignment - 1) & ~(minOffsetAlignment - 1);
@@ -95,6 +96,36 @@ VkResult Buffer::flush(VkDeviceSize size, VkDeviceSize offset) {
     mappedRange.memory = memory;
     mappedRange.offset = offset;
     mappedRange.size = size;
+  /*  std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    
+    
+    std::cout << "Size + Offset: " << size + offset << std::endl;
+   
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Size: " << size << std::endl;
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Offset: " << offset << std::endl;
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Alignment Size: " << alignmentSize << std::endl;
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;*/
+
+
     return vkFlushMappedMemoryRanges(Device.device(), 1, &mappedRange);
 }
 
@@ -151,7 +182,7 @@ void Buffer::writeToIndex(void* data, int index) {
  * @param index Used in offset calculation
  *
  */
-VkResult Buffer::flushIndex(int index) { return flush(alignmentSize, index * alignmentSize); }
+VkResult Buffer::flushIndex(int index) { return flush(alignmentSize, 0 * alignmentSize); }
 
 /**
  * Create a buffer info descriptor

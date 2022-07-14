@@ -1,5 +1,5 @@
 #include "MasterRenderer.h"
-
+#include <iostream>
 MasterRenderer::MasterRenderer(EngineDevice& dev, Renderer& renderer)
 	:device(dev), renderer(renderer), globalSetLayout{ DescriptorSetLayout::Builder(dev).addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL).build() }
 {
@@ -37,6 +37,8 @@ void MasterRenderer::Draw(Camera& sceneCamera, GameObject::Map& gameObjects, Glo
 
 		uboBuffers[frameIndex]->writeToBuffer(&ubo);
 		uboBuffers[frameIndex]->flushIndex(frameIndex);
+
+		/*std::cout << "FrameIndex: " << frameIndex << std::endl;*/
 
 		renderer.BeginSwapChainRenderPass(commandBuffer);
 		renderSystem->RenderGameObjects(info);
